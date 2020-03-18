@@ -7,3 +7,30 @@
 <ul>
   <li> <%= link_to 'Create new School', new_school_path %> </li>
 </ul>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>E-mail</th>
+      <th>Website</th>
+      <th>Logo</th>
+      <th>Is Active</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schools.each  do |school| %>
+      <tr>
+        <td><%= school.name %></td>
+        <td><%= school.phone %></td>
+        <td><%= school.email %></td>
+        <td><%= school.website %></td>
+        <td><%= school.logo %></td>
+        <td><%= school.is_active %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>

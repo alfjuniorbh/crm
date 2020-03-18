@@ -32,4 +32,79 @@ feature "Schools", type: :feature do
     expect(page).to have_content('School registered successufull!')
     expect(School.last.name).to eq(school_name)
   end
+
+  scenario 'School register new invalid School' do
+    visit(new_school_path)
+    click_on('Save')
+    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("Email can't be blank")
+  end
+
+  scenario 'Show School by id' do
+    school = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+
+    visit(school_path(school.id))
+    expect(page).to have_content(school.name)
+    expect(page).to have_content(school.email)
+    expect(page).to have_content(school.website)
+    expect(page).to have_content(school.phone)
+  end
+
+  scenario 'List all School' do
+    school_1 = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+
+    school_2 = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+
+    puts school_2.inspect
+
+    visit(schools_path)
+    expect(page).to have_content(school_1.name).and have_content(school_2.name)
+    expect(page).to have_content(school_1.email).and have_content(school_2.email)
+    expect(page).to have_content(school_1.website).and have_content(school_2.website)
+    expect(page).to have_content(school_1.phone).and have_content(school_2.phone)
+
+  end
+
+  scenario 'Update School by id' do
+    school = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+
+    new_name = Faker::Name.name
+    visit(edit_school_path(school.id))
+    fill_in('school_name', with: new_name)
+
+    click_on('Save')
+
+    expect(page).to have_content('School updated successufull!')
+    expect(page).to have_content(new_name)
+  end
+
+
 end

@@ -1,5 +1,8 @@
 class SchoolsController < ApplicationController
+  before_action :set_school, only: [:edit, :show, :update]
+
   def index
+    @schools = School.all
   end
 
   def new
@@ -16,7 +19,25 @@ class SchoolsController < ApplicationController
     end
   end
 
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @school.update(school_params)
+      redirect_to schools_path, notice: 'School updated successufull!'
+    else
+      render :edit
+    end
+  end
+
   private
+
+  def set_school
+    @school = School.find(params[:id])
+  end
 
   def school_params
     params.require(:school).permit(:id, :name,:email,:website,:phone,:logo,:is_active)

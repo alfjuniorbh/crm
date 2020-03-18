@@ -1,0 +1,19 @@
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+
+  <%= f.label :website %>
+  <%= f.text_field :website %>
+
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+
+  <%= f.label :logo %>
+  <%= f.file_field :logo %>
+
+  <%= f.label :is_active %>
+  <% { 'Y': 'Yes', 'N': 'No' }.each do |key, value| %>
+    <%= f.radio_button :is_active, key %> <%= value %><br/>
+  <% end %>
