@@ -17,6 +17,7 @@
       <th>Website</th>
       <th>Logo</th>
       <th>Is Active</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -29,6 +30,10 @@
         <td><%= school.website %></td>
         <td><%= school.logo %></td>
         <td><%= school.is_active %></td>
+        <td>
+          <%= link_to 'Show', school_path(school) %>
+          <%= link_to 'Edit', edit_school_path(school) %>
+        </td>
       </tr>
     <% end %>
   </tbody>

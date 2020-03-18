@@ -106,5 +106,32 @@ feature "Schools", type: :feature do
     expect(page).to have_content(new_name)
   end
 
+  scenario 'Click show School' do
+    school = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+    visit(schools_path)
+    find(:xpath, '/html/body/table/tbody/tr[1]/td[7]/a[1]').click
+    expect(page).to have_content('Show School')
+  end
+
+  scenario 'Click edit School' do
+    school = School.create(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      website: Faker::Internet.domain_name,
+      phone: Faker::PhoneNumber.phone_number,
+      logo: "#{Rails.root}/spec/fixtures/thumb.png",
+      is_active: ['Y', 'N'].sample
+    )
+    visit(schools_path)
+    find(:xpath, '/html/body/table/tbody/tr[1]/td[7]/a[2]').click
+    expect(page).to have_content('Edit School')
+  end
 
 end
