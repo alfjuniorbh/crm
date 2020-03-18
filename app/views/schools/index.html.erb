@@ -1,1 +1,9 @@
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
 <h1>Schools</h1>
+
+<ul>
+  <li> <%= link_to 'Create new School', new_school_path %> </li>
+</ul>
