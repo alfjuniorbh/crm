@@ -37,6 +37,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'capybara'
   gem 'faker'
+  gem 'selenium-webdriver'
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem "factory_bot_rails", "~> 4.0"
 end
 
 group :development do

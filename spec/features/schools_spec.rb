@@ -41,14 +41,7 @@ feature "Schools", type: :feature do
   end
 
   scenario 'Show School by id' do
-    school = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
+    school = create(:school)
 
     visit(school_path(school.id))
     expect(page).to have_content(school.name)
@@ -58,25 +51,9 @@ feature "Schools", type: :feature do
   end
 
   scenario 'List all School' do
-    school_1 = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
+    school_1 = create(:school)
 
-    school_2 = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
-
-    puts school_2.inspect
+    school_2 = create(:school)
 
     visit(schools_path)
     expect(page).to have_content(school_1.name).and have_content(school_2.name)
@@ -87,14 +64,7 @@ feature "Schools", type: :feature do
   end
 
   scenario 'Update School by id' do
-    school = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
+    school = create(:school)
 
     new_name = Faker::Name.name
     visit(edit_school_path(school.id))
@@ -107,31 +77,27 @@ feature "Schools", type: :feature do
   end
 
   scenario 'Click show School' do
-    school = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
+    school = create(:school)
     visit(schools_path)
     find(:xpath, '/html/body/table/tbody/tr[1]/td[7]/a[1]').click
     expect(page).to have_content('Show School')
   end
 
   scenario 'Click edit School' do
-    school = School.create(
-      name: Faker::Name.name,
-      email: Faker::Internet.email,
-      website: Faker::Internet.domain_name,
-      phone: Faker::PhoneNumber.phone_number,
-      logo: "#{Rails.root}/spec/fixtures/thumb.png",
-      is_active: ['Y', 'N'].sample
-    )
+    school = create(:school)
     visit(schools_path)
     find(:xpath, '/html/body/table/tbody/tr[1]/td[7]/a[2]').click
     expect(page).to have_content('Edit School')
+  end
+
+  scenario 'Click destroy School', js: true do
+    school = create(:school)
+    visit(schools_path)
+    
+    find(:xpath, '/html/body/table/tbody/tr[1]/td[7]/a[3]').click
+    1.second
+    page.driver.browser.window_handles.last
+    expect(page).to have_content('School deleted successful!')
   end
 
 end
