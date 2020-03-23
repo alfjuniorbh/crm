@@ -11,6 +11,7 @@
 <table border="1">
   <thead>
     <tr>
+      <th>ID</th>
       <th>Name</th>
       <th>Phone</th>
       <th>E-mail</th>
@@ -24,11 +25,12 @@
   <tbody>
     <% @schools.each  do |school| %>
       <tr>
+        <td><%= school.id %></td>
         <td><%= school.name %></td>
         <td><%= school.phone %></td>
         <td><%= school.email %></td>
         <td><%= school.website %></td>
-        <td><%= school.logo %></td>
+        <td><%= image_tag resize_image(school.logo, 70), alt: school.name %></td>
         <td><%= school.is_active %></td>
         <td>
           <%= link_to 'Show', school_path(school) %>
