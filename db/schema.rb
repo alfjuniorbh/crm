@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_19_114915) do
+ActiveRecord::Schema.define(version: 2020_03_24_160322) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,19 @@ ActiveRecord::Schema.define(version: 2020_03_19_114915) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "school_branches", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "website"
+    t.string "phone"
+    t.string "logo"
+    t.string "is_active"
+    t.integer "school_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_school_branches_on_school_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -45,4 +58,5 @@ ActiveRecord::Schema.define(version: 2020_03_19_114915) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "school_branches", "schools"
 end
