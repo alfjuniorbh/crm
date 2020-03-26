@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  before_action :authenticate_devise_school!, except: [:index]
   before_action :set_school, only: [:edit, :show, :update, :destroy]
 
   def index
