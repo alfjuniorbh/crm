@@ -13,11 +13,16 @@ class SchoolsController < ApplicationController
   def create
     @school = School.new(school_params)
 
-    if @school.save
-      redirect_to schools_path, notice: 'School registered successufull!'
-    else
-      render :new
+    respond_to do |format|
+      if @school.save
+        format.html { redirect_to @school, notice: 'School registered successufull!' }
+        format.json { render :show, status: :created, location: @school }
+      else
+        format.html { render :new }
+        format.json { render json: @school.errors, status: :unprocessable_entity }
+      end
     end
+
   end
 
   def show
